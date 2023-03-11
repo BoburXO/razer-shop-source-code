@@ -11,7 +11,7 @@ const StoreCard = () => {
     document.title = `Razer United States | Order `;
   }, []);
 
-  const { items, isEmpty, updateItemQuantity, removeItem } = useCart();
+  const { items, isEmpty, updateItemQuantity, removeItem, emptyCart } = useCart();
 
   let total = 0;
 
@@ -34,7 +34,11 @@ ${item.count} x ${item.price} $ = ${item.count}
   .join("")}        
 <b>Total:</b> ${total} $`
       )}&parse_mode=html`
-    );
+    )
+    .then(() =>  {
+      emptyCart()
+      window.location.reload()
+    })
   };
 
   return (
@@ -123,15 +127,12 @@ ${item.count} x ${item.price} $ = ${item.count}
                   <h2>{total}$</h2>
                   {!localStorage.getItem("access") ? (
                     <Link to="/sign-in">
-                      <button style={{height:"30px"}}>Log in</button>
+                      <button style={{ height: "30px" }}>Log in</button>
                     </Link>
                   ) : (
                     <button
                       onClick={() => {
-                        postTest().then(() => {
-                          localStorage.clear();
-                          window.location.reload();
-                        });
+                        postTest();
                       }}
                     >
                       Order
