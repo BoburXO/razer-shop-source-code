@@ -12,8 +12,7 @@ const initialState = {
 export const createDevice = createAsyncThunk(
        "devices/postDevice",
        async (data) => {
-         await axios.post(`${API_KEY_URL}`,data);
-         
+         await axios.post(`${API_KEY_URL}`,data)
        }
      );
 
