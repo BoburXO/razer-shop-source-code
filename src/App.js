@@ -11,6 +11,8 @@ import Services from "./pages/Services";
 import Mobile from "./pages/Mobile";
 import AdminPassword from "./pages/AdminPassword";
 import FixedBtn from './pages/FixedBtn';
+import SignUp from "./pages/Auth/SignUp";
+import SignIn from "./pages/Auth/SignIn";
 function App() {
   return (
     <>
@@ -25,6 +27,8 @@ function App() {
           <Route path='/adminPrivateRazer' element={<AdminPanel/>}/>
           <Route path='/services' element={<Services/>}/>
           <Route path="/adminPassword" element={<AdminPassword/>}/>
+          <Route path="/sign-up" element={<SignUp/>}/>
+          <Route path="/sign-in" element={<SignIn/>}/>
       </Routes>
       <FixedBtn/>
     </>

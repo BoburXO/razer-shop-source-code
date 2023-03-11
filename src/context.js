@@ -1,65 +1,64 @@
 import React, { useState } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const Context = React.createContext();
+const API = "https://bob-fst-jwt.onrender.com/";
 
 const ContextProvider = ({ children }) => {
   const [mobile, setMobile] = useState(false);
   const [notLaptop, setNotLaptop] = useState(false);
-  const [name, setName] = useState("");
-  const [image, setImage] = useState("");
-  const [price, setPrice] = useState("");
-  const [desc, setDesc] = useState("");
-  const [category, setCategory] = useState("");
+  const navigate = useNavigate();
 
-  //useStates - the end
-
-  //axios start
-  const createDevice = (e) => {
+  //register uchun ya'ni Sign Up
+  const SignUp = (e) => {
     e.preventDefault();
     axios
-      .post("https://razer-api.onrender.com/devices", {
-        name: name,
-        image: image,
-        price: price,
-        desc: desc,
-        category: category,
+      .post(`${API}api/sign-up/`, {
+        email: e.target[0].value,
+        username: e.target[1].value,
+        password: e.target[2].value,
       })
       .then((res) => {
-        console.log(res.data);
-        alert("Device created !");
-        window.location.reload();
+        if (res.status === 201) {
+          navigate("/sign-in");
+        } else {
+          alert(res.data.message);
+        }
       })
       .catch((err) => {
-        console.log(err);
+        alert(err.response.data.message);
       });
-    setDesc("");
-    setCategory("");
-    setName("");
-    setImage("");
-    setPrice("");
   };
-  //axios end
 
+  //login uchun ya'ni Sign In
+  const LogIn = (e) => {
+    e.preventDefault();
+    axios
+      .post(`${API}api/sign-in/`, {
+        email: e.target[0].value,
+        password: e.target[1].value,
+      })
+      .then((response) => {
+        if (response.status === 200) {
+          localStorage.setItem("access", response.data.token);
+          navigate("/");
+        }
+      })
+      .catch((err) => {
+        alert(err.response.data.message);
+      });
+  };
   return (
     <div>
       <Context.Provider
         value={{
+          SignUp,
+          LogIn,
           mobile,
           setMobile,
           notLaptop,
           setNotLaptop,
-          createDevice,
-          name,
-          image,
-          category,
-          price,
-          desc,
-          setDesc,
-          setPrice,
-          setName,
-          setImage,
-          setCategory,
         }}
       >
         {children}

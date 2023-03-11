@@ -74,16 +74,39 @@ const DrawerComponent = () => {
           >
             Store
           </NavLink>
-          <NavLink
-            className="user"
-            onClick={() => {
-              setMobile(false);
-              document.body.style.overflowY = "scroll";
-            }}
-            to="/user"
-          >
-            Sign Up
-          </NavLink>
+          {!localStorage.getItem("access") ? (
+            <>
+              <NavLink
+                onClick={() => {
+                  setMobile(false);
+                  document.body.style.overflowY = "scroll";
+                }}
+                className="user"
+                to="/sign-up"
+              >
+                Sign up
+              </NavLink>
+              <NavLink
+                onClick={() => {
+                  setMobile(false);
+                  document.body.style.overflowY = "scroll";
+                }}
+                className="log_out"
+                to="/sign-in"
+              >
+                Log in
+              </NavLink>
+            </>
+          ) : (
+            <a className="log_out"
+              onClick={() => {
+                window.localStorage.removeItem("access");
+                window.location.reload();
+              }}
+            >
+              Log out
+            </a>
+          )}
         </div>
       </div>
     </div>

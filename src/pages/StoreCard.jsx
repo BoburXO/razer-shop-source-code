@@ -4,6 +4,7 @@ import { useCart } from "react-use-cart";
 import Navbar from "../components/navbar/Navbar";
 import Footer from "../components/Footer/Footer";
 import axios from "axios";
+import { Link } from "react-router-dom";
 
 const StoreCard = () => {
   useEffect(() => {
@@ -120,15 +121,22 @@ ${item.count} x ${item.price} $ = ${item.count}
                 <div className="twink">
                   <h2>Total:</h2>
                   <h2>{total}$</h2>
-                  <button
-                    onClick={() => {
-                      postTest();
-                      localStorage.clear();
-                      window.location.reload()
-                    }}
-                  >
-                    Order
-                  </button>
+                  {!localStorage.getItem("access") ? (
+                    <Link to="/sign-in">
+                      <button style={{height:"30px"}}>Log in</button>
+                    </Link>
+                  ) : (
+                    <button
+                      onClick={() => {
+                        postTest().then(() => {
+                          localStorage.clear();
+                          window.location.reload();
+                        });
+                      }}
+                    >
+                      Order
+                    </button>
+                  )}
                 </div>
               </div>
             </>

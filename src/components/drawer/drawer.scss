@@ -44,7 +44,15 @@
       a {
         margin-top: 16px;
         border-bottom: 2px solid #222;
+        cursor: pointer;
       }
     }
   }
+}
+
+.log_out {
+  background: #44d62c;
+  border-radius: 5px;
+  color: #fff !important;
+  padding: 0 7px;
 }
